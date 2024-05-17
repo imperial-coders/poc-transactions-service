@@ -2,59 +2,34 @@ import { PrismaClient, Prisma } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-const userData: Prisma.UserCreateInput[] = [
+const transactionData: Prisma.TransactionCreateInput[] = [
   {
-    name: 'Alice',
-    email: 'alice@prisma.io',
-    posts: {
-      create: [
-        {
-          title: 'Join the Prisma Discord',
-          content: 'https://pris.ly/discord',
-          published: true,
-        },
-      ],
-    },
+    amountInCents: 10000,
+    transactionDate: new Date(),
+    merchant: 'Walmart',
+    summary: 'Stuff for the party',
   },
   {
-    name: 'Nilu',
-    email: 'nilu@prisma.io',
-    posts: {
-      create: [
-        {
-          title: 'Follow Prisma on Twitter',
-          content: 'https://www.twitter.com/prisma',
-          published: true,
-        },
-      ],
-    },
+    amountInCents: 10000,
+    transactionDate: new Date(),
+    merchant: 'Target',
+    summary: 'House supplies',
   },
   {
-    name: 'Mahmoud',
-    email: 'mahmoud@prisma.io',
-    posts: {
-      create: [
-        {
-          title: 'Ask a question about Prisma on GitHub',
-          content: 'https://www.github.com/prisma/prisma/discussions',
-          published: true,
-        },
-        {
-          title: 'Prisma on YouTube',
-          content: 'https://pris.ly/youtube',
-        },
-      ],
-    },
+    amountInCents: 10000,
+    transactionDate: new Date(),
+    merchant: "Kohl's",
+    summary: 'Clothes for the little one',
   },
 ];
 
 async function main() {
   console.log(`Start seeding ...`);
-  for (const u of userData) {
-    const user = await prisma.user.create({
-      data: u,
+  for (const t of transactionData) {
+    const transaction = await prisma.transaction.create({
+      data: t,
     });
-    console.log(`Created user with id: ${user.id}`);
+    console.log(`Created user with id: ${transaction.id}`);
   }
   console.log(`Seeding finished.`);
 }
