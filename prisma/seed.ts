@@ -10,13 +10,13 @@ const transactionData: Prisma.TransactionCreateInput[] = [
     summary: 'Stuff for the party',
   },
   {
-    amountInCents: 10000,
+    amountInCents: 12000,
     transactionDate: new Date(),
     merchant: 'Target',
     summary: 'House supplies',
   },
   {
-    amountInCents: 10000,
+    amountInCents: 9000,
     transactionDate: new Date(),
     merchant: "Kohl's",
     summary: 'Clothes for the little one',

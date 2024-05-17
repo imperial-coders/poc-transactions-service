@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "Transaction" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" TEXT NOT NULL PRIMARY KEY,
     "amountInCents" INTEGER NOT NULL,
     "summary" TEXT,
     "transactionDate" DATETIME NOT NULL,

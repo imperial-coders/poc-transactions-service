@@ -17,7 +17,7 @@ export class AppController {
   @Get('transactions/:id')
   async getPostById(@Param('id') id: string): Promise<TransactionModel> {
     return this.prismaService.transaction.findUnique({
-      where: { id: Number(id) },
+      where: { id },
     });
   }
 
@@ -72,6 +72,6 @@ export class AppController {
 
   @Delete('transactions/:id')
   async deleteTransaction(@Param('id') id: string): Promise<TransactionModel> {
-    return this.prismaService.transaction.delete({ where: { id: Number(id) } });
+    return this.prismaService.transaction.delete({ where: { id } });
   }
 }
