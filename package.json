@@ -8,6 +8,12 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
+    "codegen.prisma": "prisma generate",
+    "db.migrations.dev": "prisma migrate dev",
+    "db.migrations.deploy": "prisma migrate deploy",
+    "db.reset": "prisma migrate reset -f",
+    "db.studio": "prisma studio",
+    "db.seed": "prisma db seed",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "dev": "nest start --watch",
