@@ -8,18 +8,21 @@ const transactionData: Prisma.TransactionCreateInput[] = [
     transactionDate: new Date(),
     merchant: 'Walmart',
     summary: 'Stuff for the party',
+    userId: 'clwb7mw8300003z6kadi875xg',
   },
   {
     amountInCents: 12000,
     transactionDate: new Date(),
     merchant: 'Target',
     summary: 'House supplies',
+    userId: 'clwb7nckm00033z6kbm4nd22r',
   },
   {
     amountInCents: 9000,
     transactionDate: new Date(),
     merchant: "Kohl's",
     summary: 'Clothes for the little one',
+    userId: 'clwb7nfxq00063z6k0acectsj',
   },
 ];
 
