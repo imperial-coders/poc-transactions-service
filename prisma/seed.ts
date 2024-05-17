@@ -1,39 +1,39 @@
 import { PrismaClient, Prisma } from '@prisma/client';
+import { faker } from '@faker-js/faker';
 
 const prisma = new PrismaClient();
 
-const transactionData: Prisma.TransactionCreateInput[] = [
-  {
-    amountInCents: 10000,
-    transactionDate: new Date(),
-    merchant: 'Walmart',
-    summary: 'Stuff for the party',
-    userId: 'clwb7mw8300003z6kadi875xg',
-  },
-  {
-    amountInCents: 12000,
-    transactionDate: new Date(),
-    merchant: 'Target',
-    summary: 'House supplies',
-    userId: 'clwb7nckm00033z6kbm4nd22r',
-  },
-  {
-    amountInCents: 9000,
-    transactionDate: new Date(),
-    merchant: "Kohl's",
-    summary: 'Clothes for the little one',
-    userId: 'clwb7nfxq00063z6k0acectsj',
-  },
-];
+const createTransaction = ({ userId }: { userId: string }) => ({
+  amountInCents: faker.number.int({ min: 1, max: 10_000 }),
+  transactionDate: faker.date.past({ years: 1 }),
+  merchant: faker.company.name(),
+  summary: faker.commerce.product(),
+  userId,
+});
+('');
 
 async function main() {
   console.log(`Start seeding ...`);
-  for (const t of transactionData) {
-    const transaction = await prisma.transaction.create({
-      data: t,
-    });
-    console.log(`Created user with id: ${transaction.id}`);
-  }
+  const first = Array.from(Array(100).keys());
+  await prisma.transaction.createMany({
+    data: first.map((t) =>
+      createTransaction({ userId: 'clwb7mw8300003z6kadi875xg' }),
+    ),
+  });
+
+  const second = Array.from(Array(150).keys());
+  await prisma.transaction.createMany({
+    data: second.map((t) =>
+      createTransaction({ userId: 'clwb7nckm00033z6kbm4nd22r' }),
+    ),
+  });
+
+  const third = Array.from(Array(100).keys());
+  await prisma.transaction.createMany({
+    data: third.map((t) =>
+      createTransaction({ userId: 'clwb7nfxq00063z6k0acectsj' }),
+    ),
+  });
   console.log(`Seeding finished.`);
 }
 
