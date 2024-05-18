@@ -49,26 +49,26 @@ export class AppController {
     });
   }
 
-  @Post('transaction')
-  async createDraft(
-    @Body()
-    postData: {
-      merchant?: string;
-      amountInCents: number;
-      summary?: string;
-      transactionDate: Date;
-    },
-  ): Promise<TransactionModel> {
-    const { merchant, amountInCents, summary, transactionDate } = postData;
-    return this.prismaService.transaction.create({
-      data: {
-        merchant,
-        amountInCents,
-        summary,
-        transactionDate,
-      },
-    });
-  }
+  // @Post('transaction')
+  // async createDraft(
+  //   @Body()
+  //   postData: {
+  //     merchant?: string;
+  //     amountInCents: number;
+  //     summary?: string;
+  //     transactionDate: Date;
+  //   },
+  // ): Promise<TransactionModel> {
+  //   const { merchant, amountInCents, summary, transactionDate } = postData;
+  //   return this.prismaService.transaction.create({
+  //     data: {
+  //       merchant,
+  //       amountInCents,
+  //       summary,
+  //       transactionDate,
+  //     },
+  //   });
+  // }
 
   @Delete('transactions/:id')
   async deleteTransaction(@Param('id') id: string): Promise<TransactionModel> {
