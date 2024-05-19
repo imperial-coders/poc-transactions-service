@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Post,
-  Body,
-  Delete,
-  Query,
-} from '@nestjs/common';
+import { Controller, Get, Param, Delete, Query } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
 import { Transaction as TransactionModel } from '@prisma/client';
 
@@ -15,14 +7,14 @@ export class AppController {
   constructor(private readonly prismaService: PrismaService) {}
 
   @Get('transactions/:id')
-  async getPostById(@Param('id') id: string): Promise<TransactionModel> {
+  async getTransactionById(@Param('id') id: string): Promise<TransactionModel> {
     return this.prismaService.transaction.findUnique({
       where: { id },
     });
   }
 
   @Get('transactions')
-  async getFilteredPosts(
+  async getFilteredTransaction(
     @Query('take') take?: number,
     @Query('skip') skip?: number,
     @Query('searchString') searchString?: string,
