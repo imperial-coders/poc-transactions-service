@@ -1,4 +1,11 @@
-import { Controller, Get, Param, Delete, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Delete,
+  Query,
+  ParseArrayPipe,
+} from '@nestjs/common';
 import { PrismaService } from './prisma.service';
 import { Transaction as TransactionModel } from '@prisma/client';
 
@@ -6,40 +13,47 @@ import { Transaction as TransactionModel } from '@prisma/client';
 export class AppController {
   constructor(private readonly prismaService: PrismaService) {}
 
-  @Get('transactions/:id')
-  async getTransactionById(@Param('id') id: string): Promise<TransactionModel> {
-    return this.prismaService.transaction.findUnique({
-      where: { id },
-    });
-  }
-
   @Get('transactions')
-  async getFilteredTransaction(
-    @Query('take') take?: number,
-    @Query('skip') skip?: number,
-    @Query('searchString') searchString?: string,
-    @Query('orderBy') orderBy?: 'asc' | 'desc',
+  async getTransactionById(
+    @Query('ids', new ParseArrayPipe({ items: String, separator: ',' }))
+    ids: string[],
   ): Promise<TransactionModel[]> {
-    const or = searchString
-      ? {
-          OR: [
-            { summary: { contains: searchString } },
-            { merchange: { contains: searchString } },
-          ],
-        }
-      : {};
-
     return this.prismaService.transaction.findMany({
       where: {
-        ...or,
-      },
-      take: Number(take) || undefined,
-      skip: Number(skip) || undefined,
-      orderBy: {
-        updatedAt: orderBy,
+        id: {
+          in: ids,
+        },
       },
     });
   }
+
+  // @Get('transactions')
+  // async getFilteredTransaction(
+  //   @Query('take') take?: number,
+  //   @Query('skip') skip?: number,
+  //   @Query('searchString') searchString?: string,
+  //   @Query('orderBy') orderBy?: 'asc' | 'desc',
+  // ): Promise<TransactionModel[]> {
+  //   const or = searchString
+  //     ? {
+  //         OR: [
+  //           { summary: { contains: searchString } },
+  //           { merchange: { contains: searchString } },
+  //         ],
+  //       }
+  //     : {};
+
+  //   return this.prismaService.transaction.findMany({
+  //     where: {
+  //       ...or,
+  //     },
+  //     take: Number(take) || undefined,
+  //     skip: Number(skip) || undefined,
+  //     orderBy: {
+  //       updatedAt: orderBy,
+  //     },
+  //   });
+  // }
 
   // @Post('transaction')
   // async createDraft(
