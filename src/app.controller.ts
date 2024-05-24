@@ -40,6 +40,22 @@ export class AppController {
     results: TransactionModel[];
     total: number;
   }> {
+    console.log('YYYY', {
+      where: {
+        ...(userId && { userId }),
+        ...(keywords && {
+          OR: [
+            { summary: { contains: keywords } },
+            { merchant: { contains: keywords } },
+          ],
+        }),
+      },
+      take: Number(take) || undefined,
+      skip: Number(skip) || undefined,
+      orderBy: {
+        updatedAt: orderBy ?? 'desc',
+      },
+    });
     const [total, results] = await Promise.all([
       this.prismaService.transaction.count({
         where: {
